@@ -1,4 +1,4 @@
-from rgbLedLib import RGBLed
+from RGBLed_lib import RGBLed
 
 myRGB = RGBLed(15,14,13,RGBLed.Anode)
 
