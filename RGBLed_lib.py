@@ -7,8 +7,8 @@ def convert(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
 class RGBLed:
-    Anode = 'Anode'
-    Cathode = 'Cathode'
+    anode = 'anode'
+    cathode = 'cathode'
     
     def __init__(self, rPin, gPin, bPin, ledType, currentValueR = 0, currentValueG = 0, currentValueB=0):
         self.rPin = rPin
@@ -20,7 +20,7 @@ class RGBLed:
         self.currentValueB = currentValueB
         self.Set(currentValueR,currentValueG,currentValueB)
      
-    def Show(self):
+    def show(self):
         print("Red Pin:", self.rPin)
         print("Green Pin:", self.gPin)
         print("Blue Pin:", self.bPin)
@@ -29,8 +29,8 @@ class RGBLed:
         print("Current Green Value:",self.currentValueG)
         print("Current Blue Value:",self.currentValueB)
         
-    def Set(self,r,g,b):
-        if self.ledType == 'Anode':
+    def set(self,r,g,b):
+        if self.ledType == 'anode':
             self.currentValueR = r
             self.currentValueG = g
             self.currentValueB = b
@@ -44,7 +44,7 @@ class RGBLed:
             rPWM.duty_u16(r)
             gPWM.duty_u16(g)
             bPWM.duty_u16(b)
-        elif self.ledType == 'Cathode':
+        elif self.ledType == 'cathode':
             self.currentValueR = r
             self.currentValueG = g
             self.currentValueB = b
@@ -59,26 +59,26 @@ class RGBLed:
             gPWM.duty_u16(g)
             bPWM.duty_u16(b)
     
-    def Off(self):
+    def off(self):
         self.Set(0,0,0)
         
-    def White(self):
+    def white(self):
         self.Set(255,255,255)
     
-    def Yellow(self):
+    def yellow(self):
         self.Set(255,255,0)
     
-    def Magenta(self):
+    def magenta(self):
         self.Set(255,0,255)
     
-    def Cyan(self):
+    def cyan(self):
         self.Set(0,255,255)
         
-    def SlowSet(self,r,g,b,delay = 0.01):
+    def slowSet(self,r,g,b,delay = 0.01):
         if r>self.currentValueR:
             rStep = 1
         else:
-            rStep =-1
+            rStep -= 1
         
         if g>self.currentValueG:
             gStep = 1
@@ -90,7 +90,7 @@ class RGBLed:
         else:
             bStep = -1
             
-        if self.ledType == 'Anode':
+        if self.ledType == 'anode':
             for i in range(self.currentValueR,r,rStep):
                 x = convert(i,0,255,65534,0)
                 rPWM = PWM(Pin(self.rPin))
@@ -107,7 +107,7 @@ class RGBLed:
                 bPWM.duty_u16(x)
                 utime.sleep(delay)
                 
-        elif self.ledType == 'Cathode':
+        elif self.ledType == 'cathode':
             for i in range(self.currentValueR,r,rStep):
                 x = convert(i,0,255,0,65534)
                 rPWM = PWM(Pin(self.rPin))
