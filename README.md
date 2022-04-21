@@ -40,4 +40,5 @@ myRGB.cyan()
 ----
 Set RGB led to cyan (0,255,255)  
 
-
+## Features
+* RGBLed.slowSet() function must be a thread function
